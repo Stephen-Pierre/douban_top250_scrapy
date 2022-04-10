@@ -4,7 +4,8 @@
 # https://docs.scrapy.org/en/latest/topics/spider-middleware.html
 
 from scrapy import signals
-
+import random
+from .settings import USER_AGENT_LIST
 # useful for handling different item types with a single interface
 from itemadapter import is_item, ItemAdapter
 
@@ -78,7 +79,10 @@ class DoubanMovieDownloaderMiddleware:
         # - or return a Request object
         # - or raise IgnoreRequest: process_exception() methods of
         #   installed downloader middleware will be called
-        return None
+        headers = random.choice(USER_AGENT_LIST)
+        request.headers['User-Agent'] = headers
+        # print(request.headers['User-Agent'])
+        # return None
 
     def process_response(self, request, response, spider):
         # Called with the response returned from the downloader.
