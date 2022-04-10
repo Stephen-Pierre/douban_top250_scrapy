@@ -13,6 +13,7 @@ class DoubanmovieSpider(scrapy.Spider):
         for res in el_list:
             item = DoubanMovieItem()
             item['name'] = res.xpath('./div[1]/a/span[1]/text()').extract_first()
+            item['score'] = res.xpath('//*[@id="content"]//div/span[@class="rating_num"]/text()').extract_first()
             yield item
 
         next_page_url = response.xpath('//span[@class="next"]/a/@href').extract_first()
